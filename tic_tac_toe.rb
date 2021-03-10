@@ -53,8 +53,8 @@ def draw_board(board)
   end
 end
 
-def translate_input_to_index(input, dictionary)
-  dictionary[input]
+def translate_input_to_index(player_input, dictionary)
+  dictionary[player_input]
 end
 
 def ask_for_player_input
