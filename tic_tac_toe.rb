@@ -13,20 +13,24 @@ DICTIONARY = { 'a' => [0, 0],
                'g' => [2, 0],
                'h' => [2, 1],
                'i' => [2, 2] }.freeze
-PLAYER_MARKS = ["o", "x"]
+PLAYER_MARKS = %w[o x].freeze
 
-def play
+def play_game
   winner = false
   turn_count = 0
-  board = initialize_board
-  draw_board(board)
+  board_status = initialize_board
+  draw_board(board_status)
   until winner
-    (turn_count.even?) ? mark = PLAYER_MARKS[0] : mark = PLAYER_MARKS[1]
-    board = update_board(board, mark)
-    draw_board(board)
+    play_round(board_status, turn_count)
     turn_count += 1
     winner = look_for_victory
   end
+end
+
+def play_round(board_status, turn_count)
+  mark = turn_count.even? ? PLAYER_MARKS[0] : PLAYER_MARKS[1]
+  board_status = update_board(board_status, mark)
+  draw_board(board_status)
 end
 
 def fill_board(board)
@@ -76,4 +80,4 @@ def look_for_victory
   true
 end
 
-play
+play_game
