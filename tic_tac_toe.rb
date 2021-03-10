@@ -13,14 +13,18 @@ DICTIONARY = { 'a' => [0, 0],
                'g' => [2, 0],
                'h' => [2, 1],
                'i' => [2, 2] }.freeze
+PLAYER_MARKS = ["o", "x"]
 
 def play
   winner = false
+  turn_count = 0
   board = initialize_board
   draw_board(board)
   until winner
-    board = update_board(board)
+    (turn_count.even?) ? mark = PLAYER_MARKS[0] : mark = PLAYER_MARKS[1]
+    board = update_board(board, mark)
     draw_board(board)
+    turn_count += 1
     winner = look_for_victory
   end
 end
@@ -62,9 +66,9 @@ def ask_for_player_input
   translate_input_to_index(player_input, DICTIONARY)
 end
 
-def update_board(board)
+def update_board(board, mark)
   player_input = ask_for_player_input
-  board[player_input[0]][player_input[1]] = 'x'
+  board[player_input[0]][player_input[1]] = mark
   board
 end
 
