@@ -81,6 +81,7 @@ def winner?(board)
   return winner_in_rows?(board) if winner_in_rows?(board)
   return winner_in_columns?(board) if winner_in_columns?(board)
   return winner_in_diagonals?(board) if winner_in_diagonals?(board)
+
   false
 end
 
@@ -99,6 +100,7 @@ end
 def winner_in_diagonals?(board)
   return true if [board[0][0], board[1][1], board[2][2]].uniq.size == 1
   return true if [board[0][2], board[1][1], board[2][0]].uniq.size == 1
+
   false
 end
 
