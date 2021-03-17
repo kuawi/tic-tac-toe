@@ -17,13 +17,15 @@ PLAYER_MARKS = %w[o x].freeze
 
 def play_game
   winner = false
+  tie = false
   turn_count = 0
   board_status = initialize_board
   draw_board(board_status)
-  until winner
+  until winner || tie
     board_status = play_round(board_status, turn_count)
     turn_count += 1
     winner = winner?(board_status)
+    tie = tie?(turn_count)
   end
 end
 
@@ -102,6 +104,12 @@ def winner_in_diagonals?(board)
   return true if [board[0][2], board[1][1], board[2][0]].uniq.size == 1
 
   false
+end
+
+def tie?(turn_count)
+  return false if turn_count < 9
+
+  true
 end
 
 play_game
