@@ -79,13 +79,37 @@ class TicTacToe
   def ask_for_player_input(turn_count)
     puts "Player #{turn_count.odd? ? 1 : 2}:"
     player_input = gets.strip
+    until valid_input?(player_input, DICTIONARY)
+      puts 'Please choose a valid spot'
+      puts "Player #{turn_count.odd? ? 1 : 2}:"
+      player_input = gets.strip
+    end
     translate_input_to_index(player_input, DICTIONARY)
+  end
+
+  def valid_input?(input, dictionary)
+    return false if input.size > 1
+    return false unless dictionary.keys.include?(input)
+
+    true
   end
 
   def update_board(board, mark, turn_count)
     player_input = ask_for_player_input(turn_count)
+    until empty_spot?(board, player_input)
+      puts 'That spot is taken, please choose an empty one'
+      player_input = ask_for_player_input(turn_count)
+    end
     board[player_input[0]][player_input[1]] = mark
     board
+  end
+
+  def empty_spot?(board, spot)
+    row = spot[0]
+    column = spot[1]
+    return false if PLAYER_MARKS.include?(board[row][column])
+
+    true
   end
 
   def winner?(board)
