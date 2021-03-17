@@ -67,7 +67,7 @@ class TicTacToe
 
   def play_round(board_status, turn_count)
     mark = turn_count.even? ? PLAYER_MARKS[0] : PLAYER_MARKS[1]
-    board_status = update_board(board_status, mark)
+    board_status = update_board(board_status, mark, turn_count)
     draw_board(board_status)
     board_status
   end
@@ -76,13 +76,14 @@ class TicTacToe
     dictionary[player_input]
   end
 
-  def ask_for_player_input
+  def ask_for_player_input(turn_count)
+    puts "Player #{turn_count.odd? ? 1 : 2}:"
     player_input = gets.strip
     translate_input_to_index(player_input, DICTIONARY)
   end
 
-  def update_board(board, mark)
-    player_input = ask_for_player_input
+  def update_board(board, mark, turn_count)
+    player_input = ask_for_player_input(turn_count)
     board[player_input[0]][player_input[1]] = mark
     board
   end
