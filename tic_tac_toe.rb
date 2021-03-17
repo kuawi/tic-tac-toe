@@ -32,6 +32,7 @@ class TicTacToe
       @winner = winner?(@board_status)
       @tie = tie?(@turn_count)
     end
+    puts game_result
   end
 
   private
@@ -117,6 +118,15 @@ class TicTacToe
     return false if turn_count < 9
 
     true
+  end
+
+  def game_result
+    return 'Tie' if @tie
+    if @winner
+      return @turn_count.odd? ? 'Player 1 Wins' : 'Player 2 Wins'
+    end
+
+    'game_result_error'
   end
 end
 
