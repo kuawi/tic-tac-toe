@@ -76,15 +76,24 @@ class TicTacToe
     dictionary[player_input]
   end
 
-  def ask_for_player_input(turn_count)
-    puts "Player #{turn_count.odd? ? 1 : 2}:"
-    player_input = gets.strip
-    until valid_input?(player_input, DICTIONARY)
-      puts 'Please choose a valid spot'
-      puts "Player #{turn_count.odd? ? 1 : 2}:"
-      player_input = gets.strip
+  def verify_input(input)
+    return false unless valid_input?(input, DICTIONARY)
+
+    spot = translate_input_to_index(input, DICTIONARY)
+    return false unless empty_spot?(@board_status, spot)
+
+    true
+  end
+
+  def ask_for_player_input(player_number)
+    verified_input = false
+    until verified_input
+      puts "Player #{player_number.odd? ? 1 : 2}:"
+      ans = gets.strip
+      verified_input = verify_input(ans)
+      puts "Please try again" unless verified_input
     end
-    translate_input_to_index(player_input, DICTIONARY)
+    ans
   end
 
   def valid_input?(input, dictionary)
@@ -94,22 +103,19 @@ class TicTacToe
     true
   end
 
-  def update_board(board, mark, turn_count)
-    player_input = ask_for_player_input(turn_count)
-    until empty_spot?(board, player_input)
-      puts 'That spot is taken, please choose an empty one'
-      player_input = ask_for_player_input(turn_count)
-    end
-    board[player_input[0]][player_input[1]] = mark
-    board
-  end
-
   def empty_spot?(board, spot)
     row = spot[0]
     column = spot[1]
     return false if PLAYER_MARKS.include?(board[row][column])
 
     true
+  end
+
+  def update_board(board, mark, turn_count)
+    player_input = ask_for_player_input(turn_count)
+    player_input = translate_input_to_index(player_input, DICTIONARY)
+    board[player_input[0]][player_input[1]] = mark
+    board
   end
 
   def winner?(board)
