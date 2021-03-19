@@ -19,6 +19,7 @@ PLAYER_MARKS = %w[o x].freeze
 # support methods mean those that are only used whitin this module, so they under the private category
 module UserInterface
   def draw_board(board)
+    board = colorize_board(board)
     board.each_with_index do |row, i|
       row.each_with_index do |spot, j|
         print " #{spot} "
@@ -41,6 +42,15 @@ module UserInterface
   end
 
   private
+
+  def colorize_board(board)
+      board.map do |line|
+        line.map do |spot|
+          spot = spot.light_black if DICTIONARY.keys.include?(spot)
+          spot
+        end
+      end
+  end
 
   def verify_input(input, board)
     return false unless valid_input?(input, DICTIONARY)
@@ -100,7 +110,6 @@ class TicTacToe
     board.map do |line|
       line.map do
         spot = current_char.chr
-        spot = spot.light_black
         current_char += 1
         spot
       end
