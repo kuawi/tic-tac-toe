@@ -15,8 +15,66 @@ DICTIONARY = { 'a' => [0, 0],
                'i' => [2, 2] }.freeze
 PLAYER_MARKS = %w[o x].freeze
 
-# the TicTacToe class wraps the logic and UI methods of this game
+# UI mehtods for this game are considered those that contain puts, gets or print and their support methods
+# support methods mean those that are only used whitin this module, so they under the private category
+module UserInterface
+  def draw_board(board)
+    board.each_with_index do |row, i|
+      row.each_with_index do |spot, j|
+        print " #{spot} "
+        print COLUMN_SEPARATOR if (0..1).include?(j)
+      end
+      puts ''
+      puts ROW_SEPARATOR if (0..1).include?(i)
+    end
+  end
+
+  def ask_for_player_input(player_number, board)
+    verified_input = false
+    until verified_input
+      puts "Player #{player_number.odd? ? 1 : 2}:"
+      ans = gets.strip
+      verified_input = verify_input(ans, board)
+      puts 'Please try again' unless verified_input
+    end
+    translate_input_to_index(ans, DICTIONARY)
+  end
+
+  private
+
+  def verify_input(input, board)
+    return false unless valid_input?(input, DICTIONARY)
+
+    spot = translate_input_to_index(input, DICTIONARY)
+    return false unless empty_spot?(board, spot)
+
+    true
+  end
+
+  def valid_input?(input, dictionary)
+    return false if input.size > 1
+    return false unless dictionary.keys.include?(input)
+
+    true
+  end
+
+  def empty_spot?(board, spot)
+    row = spot[0]
+    column = spot[1]
+    return false if PLAYER_MARKS.include?(board[row][column])
+
+    true
+  end
+
+  def translate_input_to_index(player_input, dictionary)
+    dictionary[player_input]
+  end
+end
+
+# the TicTacToe class wraps the logic of the game
 class TicTacToe
+  include UserInterface
+
   def initialize
     @winner = false
     @tie = false
@@ -54,17 +112,6 @@ class TicTacToe
     fill_board(new_board)
   end
 
-  def draw_board(board)
-    board.each_with_index do |row, i|
-      row.each_with_index do |spot, j|
-        print " #{spot} "
-        print COLUMN_SEPARATOR if (0..1).include?(j)
-      end
-      puts ''
-      puts ROW_SEPARATOR if (0..1).include?(i)
-    end
-  end
-
   def play_round(board_status, turn_count)
     mark = turn_count.even? ? PLAYER_MARKS[0] : PLAYER_MARKS[1]
     board_status = update_board(board_status, mark, turn_count)
@@ -72,48 +119,8 @@ class TicTacToe
     board_status
   end
 
-  def translate_input_to_index(player_input, dictionary)
-    dictionary[player_input]
-  end
-
-  def verify_input(input)
-    return false unless valid_input?(input, DICTIONARY)
-
-    spot = translate_input_to_index(input, DICTIONARY)
-    return false unless empty_spot?(@board_status, spot)
-
-    true
-  end
-
-  def ask_for_player_input(player_number)
-    verified_input = false
-    until verified_input
-      puts "Player #{player_number.odd? ? 1 : 2}:"
-      ans = gets.strip
-      verified_input = verify_input(ans)
-      puts "Please try again" unless verified_input
-    end
-    ans
-  end
-
-  def valid_input?(input, dictionary)
-    return false if input.size > 1
-    return false unless dictionary.keys.include?(input)
-
-    true
-  end
-
-  def empty_spot?(board, spot)
-    row = spot[0]
-    column = spot[1]
-    return false if PLAYER_MARKS.include?(board[row][column])
-
-    true
-  end
-
   def update_board(board, mark, turn_count)
-    player_input = ask_for_player_input(turn_count)
-    player_input = translate_input_to_index(player_input, DICTIONARY)
+    player_input = ask_for_player_input(turn_count, board)
     board[player_input[0]][player_input[1]] = mark
     board
   end
