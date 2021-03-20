@@ -113,7 +113,7 @@ class TicTacToe
       @turn_count += 1
       play_round(@board_status, @turn_count)
       @winner = winner?(@board_status)
-      @tie = tie?(@turn_count)
+      @tie = tie?(@turn_count, @winner)
     end
     game_result(@tie, @winner, @turn_count)
   end
@@ -176,7 +176,8 @@ class TicTacToe
     false
   end
 
-  def tie?(turn_count)
+  def tie?(turn_count, winner)
+    return false if winner
     return false if turn_count < 9
 
     true
@@ -186,9 +187,9 @@ class TicTacToe
     say_tie if tie
     if winner
       turn.odd? ? say_player_wins(1) : say_player_wins(2)
+    else
+      say_error_message(1)
     end
-
-    say_error_message(1)
   end
 end
 
