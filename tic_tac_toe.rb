@@ -41,6 +41,14 @@ module UserInterface
     translate_input_to_index(ans, DICTIONARY)
   end
 
+  def say_tie()
+    puts 'Tie'
+  end
+
+  def say_player_wins(player_number)
+    puts "Player #{player_number} wins"
+  end
+
   private
 
   def colorize_board(board)
@@ -100,7 +108,7 @@ class TicTacToe
       @winner = winner?(@board_status)
       @tie = tie?(@turn_count)
     end
-    puts game_result
+    game_result(@tie, @winner, @turn_count)
   end
 
   private
@@ -167,13 +175,11 @@ class TicTacToe
     true
   end
 
-  def game_result
-    return 'Tie' if @tie
-    if @winner
-      return @turn_count.odd? ? 'Player 1 Wins' : 'Player 2 Wins'
+  def game_result(tie, winner, turn)
+    say_tie if tie
+    if winner
+      turn.odd? ? say_player_wins(1) : say_player_wins(2)
     end
-
-    'game_result_error'
   end
 end
 
