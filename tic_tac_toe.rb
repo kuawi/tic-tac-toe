@@ -34,7 +34,7 @@ module UserInterface
   def ask_for_player_input(player_number, board)
     verified_input = false
     until verified_input
-      puts "Player #{player_number.odd? ? 1 : 2}:"
+      puts player_number.odd? ? 'Player 1:'.light_blue : 'Player 2:'.light_red
       ans = gets.strip.downcase
       verified_input = verify_input(ans, board)
       puts 'Please try again' unless verified_input
@@ -46,7 +46,7 @@ module UserInterface
     puts 'Tic Tac Toe!'
     puts 'Two player mode'
     puts ''
-    puts 'Playing its easy'
+    puts 'Playing is easy'
     puts 'This is the board:'
     draw_board(board)
     puts 'To make your move, just type any letter from a to i'
@@ -54,11 +54,13 @@ module UserInterface
   end
 
   def say_tie
-    puts 'Tie'
+    puts "It's a tie".light_yellow
+    puts ''
   end
 
   def say_player_wins(player_number)
-    puts "Player #{player_number} wins"
+    puts "Player #{player_number} wins".light_green
+    puts ''
   end
 
   def say_error_message(error_code)
@@ -74,6 +76,8 @@ module UserInterface
     board.map do |line|
       line.map do |spot|
         spot = spot.light_black if DICTIONARY.keys.include?(spot)
+        spot = spot.light_blue if spot == PLAYER_MARKS[0]
+        spot = spot.light_red if spot == PLAYER_MARKS[1]
         spot
       end
     end
@@ -149,7 +153,7 @@ class TicTacToe
   end
 
   def play_round(board_status, turn_count)
-    mark = turn_count.even? ? PLAYER_MARKS[0] : PLAYER_MARKS[1]
+    mark = turn_count.odd? ? PLAYER_MARKS[0] : PLAYER_MARKS[1]
     board_status = update_board(board_status, mark, turn_count)
     draw_board(board_status)
     board_status
