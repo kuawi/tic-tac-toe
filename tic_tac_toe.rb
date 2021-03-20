@@ -43,13 +43,15 @@ module UserInterface
   end
 
   def show_main_screen(board)
-    puts 'Tic Tac Toe!'
-    puts 'Two player mode'
     puts ''
-    puts 'Playing is easy'
-    puts 'This is the board:'
+    puts 'Tic Tac Toe!'.light_green
+    puts 'Two player mode'.light_black
+    puts ''
+    puts "Playing it's easy".light_magenta
+    puts 'This is the board:'.light_magenta
+    puts ''
     draw_board(board)
-    puts 'To make your move, just type any letter from a to i'
+    puts 'To make your move, just type any letter from a to i'.light_yellow
     puts ''
   end
 
