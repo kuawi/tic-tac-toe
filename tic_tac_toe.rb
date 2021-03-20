@@ -200,8 +200,9 @@ class TicTacToe
   end
 
   def game_result(tie, winner, turn)
-    say_tie if tie
-    if winner
+    if tie
+      say_tie
+    elsif winner
       turn.odd? ? say_player_wins(1) : say_player_wins(2)
     else
       say_error_message(1)
