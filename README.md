@@ -1,4 +1,6 @@
-# Tic Tac Toe! [![Run on Repl.it](https://repl.it/badge/github/kuawi/tic-tac-toe)](https://repl.it/@Kuawi/tic-tac-toe)
+# Tic Tac Toe!
+[![Run on Repl.it](https://img.shields.io/badge/repl.it-Click%20here%20to%20play-brighgreen?&style=for-the-badge&logo=Repl.it&logoColor=white)](https://repl.it/@Kuawi/tic-tac-toe)
+
 The classic game "tic-tac-toe" or "noughts and crosses", playable in terminal, made for [The Odin Project: Ruby Programming course.](https://www.theodinproject.com/courses/ruby-programming)
 
 ![screenshot](screenshot.png)
