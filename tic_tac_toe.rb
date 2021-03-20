@@ -35,7 +35,7 @@ module UserInterface
     verified_input = false
     until verified_input
       puts "Player #{player_number.odd? ? 1 : 2}:"
-      ans = gets.strip
+      ans = gets.strip.downcase
       verified_input = verify_input(ans, board)
       puts 'Please try again' unless verified_input
     end
