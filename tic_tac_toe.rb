@@ -44,12 +44,12 @@ module UserInterface
   private
 
   def colorize_board(board)
-      board.map do |line|
-        line.map do |spot|
-          spot = spot.light_black if DICTIONARY.keys.include?(spot)
-          spot
-        end
+    board.map do |line|
+      line.map do |spot|
+        spot = spot.light_black if DICTIONARY.keys.include?(spot)
+        spot
       end
+    end
   end
 
   def verify_input(input, board)
