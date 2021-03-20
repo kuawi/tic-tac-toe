@@ -28,6 +28,7 @@ module UserInterface
       puts ''
       puts ROW_SEPARATOR if (0..1).include?(i)
     end
+    puts ''
   end
 
   def ask_for_player_input(player_number, board)
@@ -39,6 +40,17 @@ module UserInterface
       puts 'Please try again' unless verified_input
     end
     translate_input_to_index(ans, DICTIONARY)
+  end
+
+  def show_main_screen(board)
+    puts 'Tic Tac Toe!'
+    puts 'Two player mode'
+    puts ''
+    puts 'Playing its easy'
+    puts 'This is the board:'
+    draw_board(board)
+    puts 'To make your move, just type any letter from a to i'
+    puts ''
   end
 
   def say_tie
@@ -108,7 +120,7 @@ class TicTacToe
   end
 
   def play
-    draw_board(@board_status)
+    show_main_screen(@board_status)
     until @winner || @tie
       @turn_count += 1
       play_round(@board_status, @turn_count)
