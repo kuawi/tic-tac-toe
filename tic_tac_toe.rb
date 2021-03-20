@@ -41,12 +41,19 @@ module UserInterface
     translate_input_to_index(ans, DICTIONARY)
   end
 
-  def say_tie()
+  def say_tie
     puts 'Tie'
   end
 
   def say_player_wins(player_number)
     puts "Player #{player_number} wins"
+  end
+
+  def say_error_message(error_code)
+    case error_code
+    when 1 then message = 'Game_result_error'
+    end
+    puts message
   end
 
   private
@@ -180,6 +187,8 @@ class TicTacToe
     if winner
       turn.odd? ? say_player_wins(1) : say_player_wins(2)
     end
+
+    say_error_message(1)
   end
 end
 
