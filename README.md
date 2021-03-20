@@ -1,5 +1,5 @@
 # Tic Tac Toe!
-The classic game "tic-tac-toe" or "noughts and crosses", playable in terminal, made for [The Odin Project: Ruby Programming course.](https://www.theodinproject.com/courses/ruby-programming)
+The classic game "tic-tac-toe" or "noughts and crosses", playable in terminal or with the [live demo link](#live-demo), made for [The Odin Project: Ruby Programming course.](https://www.theodinproject.com/courses/ruby-programming)
 
 ![screenshot](screenshot.png)
 
